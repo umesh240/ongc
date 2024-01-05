@@ -1,0 +1,1011 @@
+:root {
+	--lOut_bgBtn: #E89D24;
+	--checkIn_bgBtn: #E89D24;
+	--evntBg: #457CB2;
+	--iColor: #E89D24;
+	--hotel_hcolor: #457CB2; 
+	--fom_bodr:  #E89D24;
+	--header_footerBg: #c7d7e8;
+}
+/* weather css start*/
+
+.widget {
+    position: relative;
+    left: 0;
+    display: flex;
+    height: 200px;
+    flex-wrap: wrap;
+    cursor: pointer;
+    border-radius: 20px;
+    box-shadow: 0 27px 55px 0 rgba(0, 0, 0, 0.3), 0 17px 17px 0 rgba(0, 0, 0, 0.15);
+}
+
+.widget .weatherIcon {
+    flex: 1 100%;
+    background: #FFD186;
+    font-family: weathericons;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 100px;
+}
+.widget .weatherInfo {
+    flex: 0 0 70%;
+    height: 40%;
+    background: #6d92b8;
+    border-bottom-left-radius: 20px;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.widget .weatherInfo .temperature {
+    flex: 0 0 40%;
+    width: 100%;
+    font-size: 40px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.widget .weatherInfo .description {
+    flex: 0 60%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+}
+
+.widget .weatherInfo .description .weatherCondition {
+    text-transform: uppercase;
+    font-size: 35px;
+    font-weight: 100;
+}
+
+.widget .weatherInfo .description .place {
+    font-size: 15px;
+}
+
+.widget .date {
+    flex: 0 0 30%;
+    height: 40%;
+    background: var(--evntBg);
+    border-bottom-right-radius: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: white;
+    font-size: 30px;
+    font-weight: 800;
+}
+.weatherIcon img{
+  width: 150px;
+}
+
+/* weather css end*/
+
+
+#carouselExampleControls .fas {
+    background-color: #000 !important;
+    color: #fff !important;
+    border-radius: 50% !important;
+    line-height: unset !important;
+    padding: 1px 6px !important;
+}
+#carouselExampleControls img {
+height:355px;
+}
+.content-wrapper {
+
+    margin-left: 0px !important;
+
+  }
+
+  nav.main-header {
+
+      margin-left: 0px !important;
+      background-color: var(--header_footerBg);
+  }
+
+  .navbar {
+
+      margin-bottom: 0;
+
+      box-shadow: 0 3px 5px #393f484d;
+
+  }
+
+  .header-logo img {
+
+      width: 50%;
+
+  }
+
+  li.userName {
+
+      padding-right: 15px;
+      
+  }
+
+  li.LogOUTbutton {
+
+      background-color: var(--lOut_bgBtn);
+
+      border-radius: 30px;
+
+      padding: 2px 29px;
+
+  }
+
+  .LogOUTbutton a {
+
+      color: #fff;
+
+      font-size: 14px;
+
+      font-weight: 600;
+
+  }
+
+  /* section.content {
+
+      background: url(images/hotelImage.png);
+
+      background-repeat: no-repeat;
+
+      background-size: cover;
+
+      height: 355px;
+
+  } */
+
+  .card {
+
+      background-color: #fff0 !important;
+
+      box-shadow: none;
+
+  }
+
+  .event {
+
+      display: flex;
+
+      color: #fff !important;
+
+      position: absolute;
+
+      bottom: 0px;
+
+      left: 466px;
+
+      background-color: var(--evntBg);
+
+      padding: 10px;
+
+      border-radius: 10px;
+      border: 2px solid #fff;
+      box-shadow: 0px 0px 5px 4px var(--evntBg);
+
+  }
+
+  .left-date {
+
+      padding-right: 17px;
+
+  }
+
+  .right-date {
+
+      border-left: 1px solid;
+
+      padding-left: 15px;
+
+  }
+
+  .left-date h4 {
+
+      font-size: 18px;
+
+  }
+
+  .right-date h4 {
+
+      font-size: 18px;
+
+  }
+
+  .hotelName h3 {
+
+      font-weight: bold;
+
+      font-family: 'Lato', sans-serif;
+
+      font-size: 20px;
+
+  }
+
+  .hotelName {
+
+      color: var(--hotel_hcolor);
+
+      display: flex;
+
+  }
+
+  .hotelName i {
+
+      font-size: 21px;
+
+      padding-right: 9px;
+
+  }
+
+  .vehicleDetails h3 {
+
+      color:  var(--hotel_hcolor);
+
+      font-size: 15px;
+
+      font-weight: 600;
+
+  }
+
+  .middle-content h3 {
+
+      color: #333333;
+
+      font-size: 20px;
+
+      font-family: 'Lato', sans-serif;
+
+  }
+
+  .right-content h3 {
+
+      color: #333333;
+
+      font-size: 20px;
+
+      font-family: 'Lato', sans-serif;
+
+  }
+
+  /* section.details {
+
+      padding-top: 60px;
+
+  } */
+
+  .details p {
+
+      font-size: 12px;
+
+      color: #848484;
+
+  }
+
+  .details {
+
+      display: flex;
+
+  }
+
+  .content-box {
+
+      display: flex;
+
+      justify-content: space-around;
+
+  }
+
+  button.checkinbtn {
+      border: 1px solid #FFF;
+      box-shadow: 2px 2px 2px #bbb8b8;
+      margin: auto;
+
+      justify-content: center;
+
+      display: flex;
+
+      background-color: var(--checkIn_bgBtn);
+
+
+      color: #FFF;
+
+      font-family: 'Lato', sans-serif;
+
+      font-size: 17px;
+
+      border-radius: 30px;
+
+      padding: 5px 15px;
+      transition-duration: 0.4s;
+  }
+  button.checkinbtn:hover {
+      border: 1px solid var(--checkIn_bgBtn);
+      box-shadow: 2px 2px 2px var(--checkIn_bgBtn);
+      color: var(--checkIn_bgBtn);
+      background-color: transparent;
+      transition-duration: 0.4s;
+  }
+
+  p.standard {
+
+      font-size: 16px;
+
+  }
+
+  .vehicleDetails {
+
+      padding-top: 15px;
+
+  }
+
+  
+
+  div#hotelName {
+
+      position: relative;
+
+  }
+
+  
+
+ .shapes:before {
+    content: '';
+    background: url(images/shapes.png) no-repeat;
+    position: absolute;
+    width: 38%;
+    height: 154px;
+    background-size: cover;
+    z-index: 1;
+    right: 0;
+}
+
+  div#checkinOutdates {
+
+      position: relative;
+	z-index: 2;
+
+  }
+
+  
+
+  
+
+  p.vehicle {
+
+      padding-right: 20px;
+
+  }
+
+  
+
+  /* .form-group {
+
+      width: 50%;
+
+      float: left;
+
+      padding-right: 50px;
+
+  } */
+
+  
+
+  .form-control {
+
+      display: block;
+
+      color: #495057;
+
+      background-color: #fff;
+
+      background-clip: padding-box;
+
+      border: 1px solid  var(--fom_bodr);
+
+      border-radius: 30px !important;
+
+  }
+
+  .form {
+
+      box-shadow: 0px 0px 64px -34px #a62d346e;
+
+      background-color: #fff;
+
+      padding: 40px;
+
+  }
+
+  div#formInstructions {
+
+      width: 100%;
+
+  }
+
+  div#flightselect {
+
+      width: 100%;
+
+  }
+
+  div#hotelName:after {
+
+      content: '';
+
+      background: url(images/triangles.png);
+
+      position: absolute;
+
+      width: 80px;
+
+      height: 80px;
+
+      background-size: 80px 80px;
+
+      background-repeat: no-repeat;
+
+      bottom: 0;
+
+      left: 0;
+
+      rotate: 181deg;
+
+  }
+
+  div#hotelName:before {
+
+      content: '';
+
+      background: url('images/triangles.png');
+
+      position: absolute;
+
+      width: 80px;
+
+      height: 80px;
+
+      background-repeat: no-repeat;
+
+      top: -1px;
+
+      rotate: 1deg;
+
+      right: 0;
+
+      background-size: 80px 80px;
+
+  }
+
+  button#submitRequest {
+
+      padding: 5px 56px;
+
+  }
+
+  
+
+  /* div#labelCategory {
+
+      width: 100%;
+
+  } */
+
+  .accordian-box i {
+
+      color: #c2c1c1;
+
+  }
+
+  i.fa.fa-street-view {
+
+      padding-top: 17px;
+
+  }
+
+  .arrival_departure {
+
+      display: flex;
+
+  }
+
+  .arrival {
+
+      /* display: grid;
+
+      width: 50%; */
+
+      border: 1px solid #d3d3d3;
+
+      padding-bottom: 10px;
+
+  }
+
+  .departure {
+
+      /* display: grid;
+
+      width: 50%; */
+
+      border: 1px solid #d3d3d3;
+
+      padding-bottom: 10px;
+
+      margin-left: 20px !important;
+
+  }
+
+  /* .arrival_departure .form-group {
+
+      width: 100%;
+
+      float: left;
+
+      padding: 0px 20px !important;
+
+  } */
+
+  
+
+  
+
+  /* accordian css start */
+
+  .panel-default > .panel-heading {
+
+    color: #333;
+
+    background-color: #fff;
+
+    border-color: #e4e5e7;
+
+    padding: 0;
+
+    -webkit-user-select: none;
+
+    -moz-user-select: none;
+
+    -ms-user-select: none;
+
+    user-select: none;
+
+  }
+
+  .panel-default > .panel-heading a {
+    display: none;
+  }
+
+  .panel-default > .panel-heading a {
+
+      display: block;
+
+      padding: 20px;
+
+      text-transform: capitalize;
+
+      font-family: 'Lato', sans-serif;
+
+  }
+
+  
+
+  .panel-default > .panel-heading a:after {
+
+      content: "";
+
+      position: relative;
+
+      top: 1px;
+
+      font-style: normal;
+
+      font-weight: 400;
+
+      line-height: 1;
+
+      -webkit-font-smoothing: antialiased;
+
+      -moz-osx-font-smoothing: grayscale;
+
+      float: right;
+
+      transition: transform .25s linear;
+
+      -webkit-transition: -webkit-transform .25s linear;
+
+      color: var(--iColor);
+
+  }
+
+  a:focus, a:hover {
+
+      text-decoration: none;
+
+  }
+
+  .panel i {
+
+      padding-right: 10px;
+
+      color: var(--iColor);
+
+      font-size: 13px;
+
+  }
+
+  .panel-default > .panel-heading a[aria-expanded="true"]:after {
+
+    content: "\2212";
+
+    -webkit-transform: rotate(180deg);
+
+    transform: rotate(180deg);
+
+  }
+
+  
+
+  .panel-default > .panel-heading a[aria-expanded="false"]:after {
+
+    content: "\002b";
+
+    -webkit-transform: rotate(90deg);
+
+    transform: rotate(90deg);
+
+  }
+
+  
+
+  .panel-group {
+
+      padding-top: 50px;
+
+  } 
+
+  .panel.panel-default {
+
+      margin-bottom: 20px;
+
+  }
+
+  /* accordian css end*/
+
+  
+
+  .panel-default {
+
+      box-shadow: 2px 2px 15px 0px #a1a1a152;
+
+  }
+
+  .arrival h3 {
+
+      text-transform: capitalize;
+
+      font-family: 'Lato', sans-serif;
+
+  }
+
+  .departure h3 {
+
+      text-transform: capitalize;
+
+      font-family: 'Lato', sans-serif;
+
+  }
+
+  .arrival h3 {
+
+      text-transform: capitalize;
+
+      font-family: 'Lato', sans-serif;
+
+      text-align: center;
+
+      border-bottom: 1px solid #d3d3d3;
+
+      margin-top: 0;
+
+      padding: 10px;
+
+  }
+
+  .departure h3 {
+
+      text-transform: capitalize;
+
+      font-family: 'Lato', sans-serif;
+
+      text-align: center;
+
+      border-bottom: 1px solid #d3d3d3;
+
+      margin-top: 0;
+
+      padding: 10px;
+
+  }
+
+  
+
+  .formheading h3 {
+
+      text-align: center;
+
+  }
+ .div_weather {
+    left: 0;
+    top: 30%;
+    position: fixed;
+    z-index: 11;
+    display: none;
+    /*
+    box-shadow: 2px 2px 2px #bbb8b8 !important;
+    height: 150px;
+    width: 250px;*/
+ } 
+.div_weather .card-header{
+  background-color: var(--evntBg);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+.btn_weather {
+    left: 0;
+    top: 50%;
+    position: fixed;
+    z-index: 11;
+    height: 132px;
+    width: 50px;
+    font-size: 14px !important;
+    margin: 0 !important;
+    box-shadow: 2px 2px 2px #bbb8b8 !important;
+}
+.btn_weather:hover {
+  box-shadow: 2px 2px 2px var(--checkIn_bgBtn) !important;
+}
+.btn_weather  .we_city{
+    transform: rotate(-90deg);
+    font-weight: bold;
+    padding: 4px;
+    margin: auto;
+}
+.sos_emrgncy {
+    float: right;
+    right: 0;
+    top: 50%;
+    position: fixed;
+    z-index: 11;
+    height: 132px;
+    width: 50px;
+    font-size: 14px !important;
+    margin: 0 !important;
+    box-shadow: -2px 2px 2px #bbb8b8 !important;
+}
+.sos_emrgncy:hover {
+  box-shadow: -2px 2px 2px var(--checkIn_bgBtn) !important;
+}
+  
+.sos_emrgncy span.text {
+    transform: rotate(90deg);
+    font-weight: bold;
+    padding: 4px;
+    margin: auto;
+}
+  /* media query start */
+
+@media (min-width:320px) and (max-width:767px) {
+
+.div_weather {
+  width: 99%;
+}
+
+.widget .weatherInfo .temperature, .widget .weatherInfo .description .weatherCondition, .widget .date
+{ font-size: 24px;  }
+#carouselExampleControls img {
+    height: 200px;
+}
+    .navbar-nav {
+
+      margin: 7.5px 0;
+
+  }
+
+  .header-logo img {
+
+      width: 35%;
+
+  }
+
+  .event {
+
+    left: 24px !important;
+
+  }
+
+  .left-date h4 {
+
+    font-size: 11px !important;
+
+  }
+
+  .right-date h4 {
+
+    font-size: 11px !important;
+
+  }
+
+  li.userName {
+
+    padding-right: 11px  !important;
+
+    font-size: 12px !important;
+
+  }
+
+  li.LogOUTbutton {
+
+    padding: 0px 8px !important;
+
+  }
+
+  p.standard {
+
+    font-size: 11px !important;
+
+  }
+
+  p.standard {
+
+    font-size: 13px !important;
+
+  }
+
+  div#checkinOutdates:before {
+
+    bottom: 284px;
+
+    left: 15px;
+
+    width: 100%;
+
+  }
+
+  .middle-content h3 {
+
+    font-size: 15px;
+
+  }
+
+  .right-content h3 {
+
+    font-size: 15px;
+
+  }
+
+  button.checkinbtn {
+
+    font-size: 13px;
+
+  }
+
+  .form {
+
+      padding: 44px 20px;
+
+  }
+
+  .LogOUTbutton a { 
+
+      font-size: 10px;
+
+  }
+
+  .form-group {
+
+      padding: 0px;
+
+  }
+
+  .arrival_departure {
+
+      display: block;
+
+  }
+
+  .departure {
+
+      margin-left: 0px !important;
+
+  }
+
+  .arrival {
+
+      margin-bottom: 10px;
+
+  }
+
+  }
+
+  
+
+  /* media query end */
+/* /////////////////////////////////////////////////// */
+/*   //////////////////  Footer  ///////////////////// */
+  /*footer css*/
+footer {
+  padding: 5px 0px;
+  background-color: var(--header_footerBg);
+  box-shadow: 0 -2px 5px #393f484d;
+}
+
+
+.footer-logo img {
+  width: 45px;
+  padding-top: 5px;
+}
+
+
+.footer-list ul li {
+  list-style-type: none;
+  padding-bottom: 5px;
+}
+.footer-list i {
+  color:var(--iColor);
+  padding-right: 10px;
+}
+.footer-list {
+  float: right;
+  padding-top: 5px;
+}
+/* footer css end*/
+
+.divProfile label{  width:100%;  }
+
+
+/** BEGIN CSS **/
+
+@keyframes rotate-loading {
+    0%  { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+:root {
+	--wd_ht: 100px;
+	--logo_mr: 4%;
+	--logo_wd: 92%;  
+}
+.loading-container {
+    background-color: #797777b0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    z-index: 1111;
+
+}
+
+.logo {
+    position: absolute; 
+    width: var(--wd_ht);
+    height: var(--wd_ht);
+}
+
+.loading {
+    width: var(--wd_ht);
+    height: var(--wd_ht);
+    border-radius: 50%;
+    border: 2px solid transparent;
+    border-color: transparent #fff transparent #fff; /* Change the color if needed */
+    animation: rotate-loading 1.5s linear infinite;
+    transform-origin: 50% 50%;
+}
+
+.logo img{    width: var(--logo_wd); margin: var(--logo_mr); }
+

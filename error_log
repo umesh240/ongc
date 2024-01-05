@@ -1,0 +1,2 @@
+[06-Dec-2023 13:14:50 Asia/Kolkata] PHP Fatal error:  Cannot redeclare App\Http\Controllers\API\ApiUsersController::eventCancel() in /home/r10w01h0ujkt/goplasticfree.in/ongc/app/Http/Controllers/API/ApiUsersController.php on line 718
+[06-Dec-2023 13:15:11 Asia/Kolkata] PHP Fatal error:  Cannot redeclare App\Http\Controllers\API\ApiUsersController::eventCancel() in /home/r10w01h0ujkt/goplasticfree.in/ongc/app/Http/Controllers/API/ApiUsersController.php on line 718

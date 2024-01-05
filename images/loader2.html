@@ -1,0 +1,46 @@
+<style>
+
+/** BEGIN CSS **/
+body {background: #333333;}
+@keyframes rotate-loading {
+    0%  { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+:root {
+	--wd_ht: 100px;
+	--logo_mr: 4%;
+	--logo_wd: 92%;  
+}
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.logo {
+    position: absolute; 
+    width: var(--wd_ht);
+    height: var(--wd_ht);
+}
+
+.loading {
+    width: var(--wd_ht);
+    height: var(--wd_ht);
+    border-radius: 50%;
+    border: 2px solid transparent;
+    border-color: transparent #fff transparent #fff; /* Change the color if needed */
+    animation: rotate-loading 1.5s linear infinite;
+    transform-origin: 50% 50%;
+}
+
+.logo img{    width: var(--logo_wd); margin: var(--logo_mr); }
+
+</style>
+<div class="loading-container">
+    <div class="logo">
+        <img src="http://ongc.goplasticfree.in/images/logo.png" alt="Logo">
+    </div>
+    <div class="loading"></div>
+</div>
+
