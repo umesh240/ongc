@@ -1375,7 +1375,10 @@ ul.nav.nav-tabs.justify-content-center {
 h5.airport-text {
     font-size: 13px;
 }
-
+.hotel-bg {
+    width: 100%;
+    padding: 10px 15px;
+}
 
 
 /*change password*/
