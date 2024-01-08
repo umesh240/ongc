@@ -56,11 +56,17 @@ class ReportsController extends Controller
         $event_list = $this->eventList();
         $data['event_list'] = $event_list;
 
-        $emp1 = DB::table('event_books_emp')->where('emp_event_cd', $eventcd)->where('emp_hotel_cd', $hotel_cd)->where('status_in_htl', 1)
-                ->distinct()->orderBy('emp_ev_book_id')->select('emp_ev_book_id','emp_cd')->get();
+        $emp1 = DB::table('event_books_emp')->where('emp_event_cd', $eventcd)
+                        ->when($hotel_cd > 0, function ($query) use ($hotel_cd) {
+                            $query->where('emp_hotel_cd', $hotel_cd);
+                        })->where('status_in_htl', 1)->distinct()
+                        ->orderBy('updated_at', 'desc')->select('emp_ev_book_id','emp_cd','updated_at')->get();
         
-        $emp2 = DB::table('event_books_emp')->where('emp_event_cd', $eventcd)->where('emp_hotel_cd', $hotel_cd)->where('status_in_htl', 0)
-                ->distinct()->orderBy('emp_ev_book_id')->select('emp_ev_book_id','emp_cd')->get();
+        $emp2 = DB::table('event_books_emp')->where('emp_event_cd', $eventcd)
+                        ->when($hotel_cd > 0, function ($query) use ($hotel_cd) {
+                            $query->where('emp_hotel_cd', $hotel_cd);
+                        })->where('status_in_htl', 0)->distinct()
+                        ->orderBy('updated_at', 'desc')->select('emp_ev_book_id','emp_cd','updated_at')->get();
 
         $empArr = [];
         foreach ($emp1 as $key => $emp1Val) {
@@ -75,10 +81,12 @@ class ReportsController extends Controller
         }
         $evEmpIds = implode(',', $empArr);
         $report_data = EventBook::where('emp_event_cd', $eventcd)->whereIn('emp_ev_book_id', $empArr)
-                                ->when($hotel_cd > 0, function ($query) use ($hotel_cd) {
-                                    $query->where('emp_hotel_cd', $hotel_cd);
-                                })
-                                ->with(['userDetails', 'eventDetails', 'hotelDetails', 'categoryDetails', 'shareUserDetails'])->get();
+                        ->when($hotel_cd > 0, function ($query) use ($hotel_cd) {
+                            $query->where('emp_hotel_cd', $hotel_cd);
+                        })
+                        ->with(['userDetails', 'eventDetails', 'hotelDetails', 'categoryDetails', 'shareUserDetails'])
+                        ->orderBy('event_books_emp.updated_at', 'desc')
+                        ->get();
         //print_r($report_data); die;
         $data['report_data'] = $report_data;
         $data['eventcd'] = $eventcd;

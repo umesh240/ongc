@@ -48,8 +48,22 @@
               <tbody>
               @php $cnt = 0; @endphp 
               @foreach ($employee_list as $employee) 
-              @php $cnt++; @endphp 
-              <tr style="">
+              @php 
+                //echo '<pre>'; print_r($employee_list); die;
+                $cnt++; 
+                $ttlActvUsrRecord = @$employee->total_active_records;
+                $active_hotel_name = @$employee->active_hotel_name;
+                $status_in_htl = @$employee->status_in_htl;
+                $title = $bkColor = '';
+                if(@$event_code > 0 && $status_in_htl == 0){
+                  $bkColor = 'background-color: #ffd7d7;';
+                  $title = "Remove from hotel";
+                  if($ttlActvUsrRecord == 1){
+                    $title = "Re-Assign to hotal : <br>".$active_hotel_name;
+                  }
+                }
+              @endphp 
+              <tr style="{{ $bkColor }}" title="{{ $title }}" data-toggle="tooltip" data-html="true">
                 <td style="padding-top: 2px; padding-bottom: 2px;">{{ $employee->cpf_no; }}</td>
                 <td style="padding-top: 2px; padding-bottom: 2px;">{{ $employee->name; }}</td>
                 <td style="padding-top: 2px; padding-bottom: 2px;">{{ $employee->email; }}</td>
@@ -57,13 +71,21 @@
                 <td style="padding-top: 2px; padding-bottom: 2px;">{{ $employee->level; }}</td>
                 <td style="padding-top: 2px; padding-bottom: 2px;">{{ $employee->designation; }}</td>
                 <td style="padding-top: 2px; padding-bottom: 2px;">
-                  @if(@$event_code > 0)
-                  <button type="button" class="btn btn-xs btn-success" onclick="window.location='{{ route("employee.ae", ["id" => $employee->id, "event_id" => @$employee->emp_ev_book_id, "ae" => "event"]) }}';" title="View/Edit User's Event"><i class="fa fa-eye"></i></button>
+                  @if(@$event_code > 0 && @$status_in_htl == 0)
+                    @if($ttlActvUsrRecord > 0)
+                      Assign Other Hotel
+                    @else
+                      <button type="button" class="btn btn-xs btn-warning" onclick="window.location='{{ route("employee.ae", ["id" => $employee->id, "event_id" => @$employee->emp_ev_book_id, "ae" => "event"]) }}';" title="Re-assign Event"><i class="fa fa-pencil-alt"></i> Re-assign</button>
+                    @endif
                   @else
-                  <button type="button" class="btn btn-xs btn-success" onclick="window.location='{{ route("employee.ae", ["id" => $employee->id, "event_id" => @$employee->emp_ev_book_id, "ae" => "edit"]) }}';" title="View/Edit User"><i class="fa fa-eye"></i></button>
-                  <button type="button" class="btn btn-xs btn-info" onclick="window.location='{{ route("employee.ae", ["id" => $employee->id, "event_id" => @$employee->emp_ev_book_id, "ae" => "event"]) }}';" title="Add New Event"><i class="fa fa-address-card"></i></button>
+                    @if(@$event_code > 0)
+                      <button type="button" class="btn btn-xs btn-success" onclick="window.location='{{ route("employee.ae", ["id" => $employee->id, "event_id" => @$employee->emp_ev_book_id, "ae" => "event"]) }}';" title="View/Edit User's Event"><i class="fa fa-pencil-alt"></i></button>
+                    @else
+                      <button type="button" class="btn btn-xs btn-success" onclick="window.location='{{ route("employee.ae", ["id" => $employee->id, "event_id" => @$employee->emp_ev_book_id, "ae" => "edit"]) }}';" title="View/Edit User"><i class="fa fa-pencil-alt"></i></button>
+                      <button type="button" class="btn btn-xs btn-info" onclick="window.location='{{ route("employee.ae", ["id" => $employee->id, "event_id" => @$employee->emp_ev_book_id, "ae" => "event"]) }}';" title="Add New Event"><i class="fa fa-address-card"></i></button>
+                    @endif
+                    <button type="button" class="btn btn-xs btn-danger" data-link="{{ route('employee.delete') }}" onclick="recordsDelete(this, '{{$employee->id}}', '{{ @$employee->emp_ev_book_id }}');" title="Delete"><i class="fa fa-trash"></i></button>
                   @endif
-                  <button type="button" class="btn btn-xs btn-danger" data-link="{{ route('employee.delete') }}" onclick="recordsDelete(this, '{{$employee->id}}', '{{ @$employee->emp_ev_book_id }}');" title="Delete"><i class="fa fa-trash"></i></button>
                 </td>
               </tr>
               @endforeach

@@ -32,6 +32,11 @@
     <link rel="stylesheet" href="{{ asset('pages/plugins/owl/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('pages/plugins/owl/owl.theme.default.min.css') }}">
     <link rel="stylesheet" href="{{ asset('pages/plugins/flickity/flickity.min.css') }}">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('pages/style.css') }}">
     
     <style>
@@ -123,7 +128,7 @@
           <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="fas fa-ellipsis-v"></i><b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li>
-              <a href="#" title="Logout">Logout </a>
+              <a href="{{ route('logout'); }}" title="Logout">Logout </a>
             </li>
           </ul>
         </li>
@@ -147,20 +152,20 @@
 <div class="container">
 <nav class="nav_bottom">
     <a href="{{ route('my.dashboard') }}" class="nav__link">
-        <i class="material-icons nav__icon"><i class="fas fa-home"></i>
+        <i class="material-icons nav__icon"><i class="fas fa-home"></i></i>
         </i>
         <span class="nav__text">Home</span>
     </a>
-    <a href="{{ route('my.page', ['page'=>'flight']) }}" class="nav__link nav__link--active">
-        <i class="material-icons nav__icon"><i class="fas fa-fighter-jet"></i></i>
-        <span class="nav__text">Flight</span>
+    <a href="#" class="nav__link nav__link--active" >
+        <i class="material-icons nav__icon"><i class="fas fa-map-marked-alt"></i></i>
+        <span class="nav__text">Way Finder</span>
     </a>
-    <a href="#" class="nav__link">
-        <i class="material-icons nav__icon"><i class="fas fa-bars"></i></i>
+   <!---- <a href="{{ route('menu.page') }}" class="nav__link">
+        <i class="material-icons nav__icon"><ion-icon name="apps-outline"></ion-icon></i>
         <span class="nav__text">Menu</span>
-    </a>
+    </a>--->
     <a href="#" class="nav__link">
-        <i class="material-icons nav__icon"><i class="fas fa-comments"></i></i>
+        <i class="material-icons nav__icon"><ion-icon name="chatbox-outline"></ion-icon></i>
         <span class="nav__text">Chat</span>
     </a>
 

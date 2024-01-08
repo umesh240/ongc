@@ -173,7 +173,7 @@ Route::middleware(['employeeGaurd'])->group(function () {
             Route::get('/menus', 'menuPage')->name('menu.page');
 
 
-            Route::get('/my.{page}', 'pageIndex')->name('my.page')->where('page','participation|quiz|faq|feedback|flight|helpdesk|about|change_password|day_wise|date_wise');
+            Route::get('/my.{page}', 'pageIndex')->name('my.page')->where('page','participation|quiz|faq|feedback|flight|helpdesk|local_area|news|change_password|day_wise|date_wise');
             /*
             Route::get('/my.faq', 'faqIndex')->name('my.faq');
             Route::get('/my.feedback', 'feedbackIndex')->name('my.feedback');

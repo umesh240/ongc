@@ -85,11 +85,11 @@
         $printnm = $printnm." \n Print Date : ".date('d-m-Y h i s A');
         @endphp
         <div class="card-footer exportData" id="exportData" >
-          <table class="table table-bordred tableExport" width="100%" data-pgNam="{{ $printnm }}">
+          <table class="table table-bordred tableExport" width="100%" data-pgNam="{{ $printnm }}" style="font-size:14px;">
             <thead>
               <tr>
                 <th>Sr.No.</th>
-                <th>Employee Name</th>
+                <th>Emp. Name</th>
                 <th>Designation</th>
                 <th>Level</th>
                 <th>Email Id</th>
@@ -97,6 +97,9 @@
                 <th>Share With</th>
                 <th>Hotel Name</th>
                 <th>Room Category</th>
+                <th>Check-in</th>
+                <th>Check-out</th>
+                <th>Last Update</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -107,11 +110,28 @@
                 @php
                   $status_in_htl = $data->status_in_htl;
                   if($status_in_htl == 1){
-                    $status_htl = 'Active';
+                    $status_htl = 'Attending';
                   }else if($status_in_htl == 0){
-                    $status_htl = 'Delete';
+                    $status_htl = 'Not Attending';
                   }else{
                     $status_htl = '';
+                  }
+                  $checkin = $checkout = '';
+                  $assign_check_in = $data->assign_check_in;
+                  $assign_check_out = $data->assign_check_out;
+                  if($assign_check_in != null && strtotime($assign_check_in) > 0){
+                    $checkin = date('d/m/Y h:i A', strtotime($assign_check_in));
+                  }
+                  if($assign_check_out != null && strtotime($assign_check_out) > 0){
+                    $checkout = date('d/m/Y h:i A', strtotime($assign_check_out));
+                  }
+                  $created_at = $data->created_at;
+                  $updated_at = $data->updated_at;
+                  $lastUpdate = '';
+                  if($updated_at != null && strtotime($updated_at) > 0){
+                    $lastUpdate = date('d/m/Y h:i A', strtotime($updated_at));
+                  }else{
+                    $lastUpdate = date('d/m/Y h:i A', strtotime($created_at));
                   }
                 @endphp
                 <tr>
@@ -124,6 +144,9 @@
                   <td></td>
                   <td>{{ $data->hotelDetails->hotel_name }}</td>
                   <td>{{ $data->categoryDetails->hotel_category }}</td>
+                  <td>{{ $checkin }}</td>
+                  <td>{{ $checkout }}</td>
+                  <td>{{ $lastUpdate }}</td>
                   <td>{{ $status_htl }}</td>
                 </tr>
               @endforeach

@@ -36,11 +36,13 @@ class HomeController extends Controller
 
         $eventCntAll = DB::table('events')->count();
         $eventCntActv = DB::table('events')->where('actv_event', 1)->count();
-        $data['eventCnt'] = $eventCntAll.'/'.$eventCntActv;
+        //$data['eventCnt'] = $eventCntAll.'/'.$eventCntActv;
+        $data['eventCnt'] = $eventCntActv;
 
         $hotelCntAll = DB::table('hotels')->count();
         $hotelCntActv = DB::table('hotels')->where('actv_hotel', 1)->count();
-        $data['hotelCnt'] = $hotelCntAll.'/'.$hotelCntActv;
+        //$data['hotelCnt'] = $hotelCntAll.'/'.$hotelCntActv;
+        $data['hotelCnt'] = $hotelCntActv;
 
         $usersCntAll = DB::table('users')->where('actv_status', 1)->count();
         $data['usersCnt'] = $usersCntAll;

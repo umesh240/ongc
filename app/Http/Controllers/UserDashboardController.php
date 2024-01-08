@@ -357,8 +357,11 @@ class UserDashboardController extends Controller
                 $data['sos_contact'] = $sosData;
                 $pg = 'user_helpdesk';
             break;
-            case 'about':
-                $pg = 'user_about';
+            case 'local_area':
+                $pg = 'user_local_area';
+            break;
+            case 'news':
+                $pg = 'user_news';
             break;
             case 'change_password':
                 $pg = 'user_change_password';
@@ -379,6 +382,6 @@ class UserDashboardController extends Controller
 
     public function menuPage()
     {
-        return view("menus");
+        return view("user_menus");
     }
 }

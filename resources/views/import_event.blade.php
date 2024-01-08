@@ -96,7 +96,7 @@
               <hr class="w-100 m-2">
               <input type="hidden" class="bok_ev_id" name="bok_ev_id" value="{{ $event_info->ev_id }}" />
               <div class="col-sm-12">
-                <table class="table table-bordered table-striped tblResponsiv" style="font-size:16px;">
+                <table class="table table-bordered tblResponsiv" style="font-size:16px;">
                   <thead>
                     <tr>
                       <th>Sno</th>

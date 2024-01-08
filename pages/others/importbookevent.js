@@ -7,7 +7,8 @@ $('.frmBookEventSave').on('submit', function(e) {
 	var bok_ev_id = $('.bok_ev_id').val();
 	var urlSave = $(this).attr('action');
 	var csrf_token = $('input[name="_token"]').val();
-	$('.tdStatus').text("Prohress").addClass('text-primary');
+	$('.tdStatus').text("Progress").addClass('text-info');
+	$('.btnSubmit').attr('disabled', 'disabled');
 	$('.event_book').not('.trrAdd').each(function(index){
 		var thiss = this;
 		var info = $(thiss).val();
@@ -26,7 +27,7 @@ $('.frmBookEventSave').on('submit', function(e) {
 				if(status == '1'){
 					clr = 'text-success';
 				}
-				$(thiss).closest('.trrEB').find('.tdStatus').removeClass('text-primary');
+				$(thiss).closest('.trrEB').find('.tdStatus').removeClass('text-info');
 				$(thiss).closest('.trrEB').addClass('trrAdd');
 				$(thiss).closest('.trrEB').find('.tdStatus').text(message).addClass(clr);
 			},
@@ -34,6 +35,7 @@ $('.frmBookEventSave').on('submit', function(e) {
 				$('.btnSubmit').removeAttr('disabled');
 			}
 		});
+		
 	});
 });
 //////////////////////////////////////////////////////////////////////////

@@ -39,12 +39,20 @@ class UserController extends Controller
         }
         //$event_list = DB::table('events')->where('actv_event', 1)->paginate($length);
         $employee_list = DB::table('users')
+                    ->when($event_code > 0, function ($query) use ($event_code) {
+                        $query->select(
+                            'users.*', 'event_books_emp.*',
+                            DB::raw("(SELECT COUNT(*) FROM event_books_emp WHERE event_books_emp.emp_cd = users.id and event_books_emp.emp_event_cd = $event_code and event_books_emp.status_in_htl = 1) as total_active_records"),
+                            DB::raw('(SELECT hotels.hotel_name FROM event_books_emp LEFT JOIN hotels ON event_books_emp.emp_hotel_cd = hotels.htl_id WHERE event_books_emp.emp_cd = users.id AND event_books_emp.emp_event_cd = ' . $event_code . ' AND event_books_emp.status_in_htl = 1 ) as active_hotel_name')
+                        );
+                    })
                     ->when($event_code > 0, function ($query) use ($event_code, $hotel_code) {
                         $query->rightJoin('event_books_emp', 'event_books_emp.emp_cd', '=', 'users.id')
-                                ->where('event_books_emp.emp_event_cd', $event_code)->where('event_books_emp.status_in_htl', 1)
+                                ->where('event_books_emp.emp_event_cd', $event_code)
                                 ->when($hotel_code > 0, function ($query) use ($hotel_code) {
                                     $query->where('event_books_emp.emp_hotel_cd', $hotel_code);
                                 });
+                                ////// ->where('event_books_emp.status_in_htl', 1)
                     })
                     ->when(!empty($level_code), function ($query) use ($level_code, $event_code) {
                         $query->when($event_code > 0, function ($query) use ($level_code) {
@@ -67,15 +75,16 @@ class UserController extends Controller
         $events_list = DB::table('event_books_emp')->select('event_books_emp.emp_event_cd', 'events.*')
                     ->leftJoin('events', 'event_books_emp.emp_event_cd', '=', 'events.ev_id')
                     ->distinct()->get();
-        if($event_code > 0){
+        if($event_code > 0){   /// ->where('status_in_htl', 1)
             $level_list = DB::table('event_books_emp')->select('user_level as level')->whereNotNull('user_level')
-                            ->orderBy('user_level', 'asc')->where('status_in_htl', 1)->distinct()->get(); 
+                            ->orderBy('user_level', 'asc')->distinct()->get(); 
         }else{
             $level_list = DB::table('users')->select('level')->whereNotNull('level')->orderBy('level', 'asc')->distinct()->get(); 
         }
         $hotel_list = DB::table('event_books_emp')->select('event_books_emp.emp_hotel_cd', 'hotels.htl_id', 'hotels.hotel_name')
                         ->leftJoin('hotels', 'event_books_emp.emp_hotel_cd', '=', 'hotels.htl_id')
-                        ->where('hotels.actv_hotel', 1)->where('event_books_emp.status_in_htl', 1)->groupBy('event_books_emp.emp_hotel_cd')->get(); 
+                        ->where('hotels.actv_hotel', 1)->groupBy('event_books_emp.emp_hotel_cd')->get(); 
+                        ////// ->where('event_books_emp.status_in_htl', 1)
         $data['level_list'] = $level_list; 
         $data['hotel_list'] = $hotel_list; 
         $data['events_list'] = $events_list;  
@@ -277,7 +286,7 @@ class UserController extends Controller
                 $prv_emp_hotel_cd = @$findAvt->emp_hotel_cd;
                 $prv_emp_hotel_cat_cd = @$findAvt->emp_hotel_cat_cd;
                 if(($eventcd != $prv_emp_event_cd || $hotel_cd != $prv_emp_hotel_cd) && $intcd > 0){
-                    $queryTrfHtl = DB::table('event_books_emp')->where('emp_ev_book_id', $intcd)->where('emp_event_cd', $eventcd)->where('emp_cd', $emp_cd)->update(['status_in_htl' => 0]);
+                    $queryTrfHtl = DB::table('event_books_emp')->where('emp_ev_book_id', $intcd)->where('emp_event_cd', $eventcd)->where('emp_cd', $emp_cd)->update(['status_in_htl' => 0, 'updated_at' => $today]);
                     $findAvt = 0;
                 }
                 if ($findAvt) {
@@ -285,12 +294,22 @@ class UserController extends Controller
                         $row_dataE['updated_at']     = $today;
                         $subQueryRun = DB::table('event_books_emp')->where('emp_ev_book_id', $intcd)->where('emp_event_cd', $eventcd)->where('emp_cd', $emp_cd)->update($row_dataE);
                 }else{
-                    $row_dataE['created_at']        = $today;
-                    $row_dataE['emp_cd']            = $emp_cd;
-                    $row_dataE['emp_event_cd']      = $eventcd;
                     $row_dataE['ev_emp_create_by']  = $userId;
                     $row_dataE['status_in_htl']     = 1;
-                    $subQueryRun = DB::table('event_books_emp')->insert($row_dataE);
+
+                    $findHotel = DB::table('event_books_emp')->where('emp_hotel_cd', $hotel_cd)->where('emp_event_cd', $eventcd)->where('emp_cd', $emp_cd)->first();
+                    $allReadyExistCd = @$findHotel->emp_ev_book_id;
+                    if($allReadyExistCd > 0){
+                        $row_dataE['updated_at']     = $today;
+                        $subQueryRun = DB::table('event_books_emp')->where('emp_ev_book_id', $allReadyExistCd)->where('emp_event_cd', $eventcd)->where('emp_cd', $emp_cd)->update($row_dataE);
+                    }else{
+                        $row_dataE['created_at']        = $today;
+                        $row_dataE['updated_at']        = $today;
+                        $row_dataE['emp_cd']            = $emp_cd;
+                        $row_dataE['emp_event_cd']      = $eventcd;
+                        $subQueryRun = DB::table('event_books_emp')->insert($row_dataE);
+                    }
+                    
                 }
 
                 if($share_room_with > 0){ // if room sahre 
@@ -406,7 +425,7 @@ class UserController extends Controller
                 
                 $queryRun2 = DB::table('event_books_emp')->where('emp_event_cd', $eventcd)->whereIn('emp_cd', $allEmpCds)->update(['share_room_with_empcd' => $shareEmpIdsRooms]);
             }
-            $runQuery = DB::table('event_books_emp')->where('emp_cd', $del_id)->where('emp_ev_book_id', $event_id)->delete();
+            $runQuery = DB::table('event_books_emp')->where('emp_cd', $del_id)->where('emp_ev_book_id', $event_id)->update(['status_in_htl' => 0, 'updated_at' => now()]);
         }else{
             $runQuery = DB::table('users')->where('id', $del_id)->update(['actv_status' => 2]);
         }

@@ -54,7 +54,7 @@ class ImportController extends Controller
         $data['eventcd'] = $eventcd; 
         $data['event_info'] = $event_info; 
         try {
-            $excelRows = [];
+            $invalidRows = $excelRows = [];
             $file = $request->file('excel_file');
 
             // Define your custom validation logic here
@@ -79,7 +79,7 @@ class ImportController extends Controller
                     $from_dt            = $row[9];
                     $to_dt              = $row[10];
                     $hotel_nm           = $row[11];
-                    $category           = $row[12];
+                    $category_room      = $row[12];
                     $comments           = $row[13];
 
                     $arrival_airport    = $row[14];
@@ -101,27 +101,35 @@ class ImportController extends Controller
                     if(empty($cpfno)){
                         $cpfno = $mobile;
                     }
+                    $isEmail = str_contains($email, '@');
+                    if((empty(trim($email)) || !$isEmail) && (empty(trim($mobile)) || empty(trim($cpfno)) )){
+                        $row[26] = 4;
+                        $row[27] = "end_of_line";
+                        $invalidRows[] = $row;
 
-                    $result = DB::table('event_books_emp')
-                                    ->leftJoin('users', 'users.id', '=', 'event_books_emp.emp_cd')
-                                    ->where('event_books_emp.emp_event_cd', $eventcd)
-                                    ->where('users.email', $email)
-                                    ->first();
-                    $cpf_noEMP = @$result->cpf_no;
-                    $resultCnt = @$result->id;
-                    $emp_booking_exist = 0;
-                    if($resultCnt > 0){
-                        $emp_booking_exist = 1;
-                        if(strtoupper($cpf_noEMP) != strtoupper($cpfno)){
-                            $emp_booking_exist = 2;
+                    }else{
+                        $result = DB::table('event_books_emp')
+                                        ->leftJoin('users', 'users.id', '=', 'event_books_emp.emp_cd')
+                                        ->where('event_books_emp.emp_event_cd', $eventcd)
+                                        ->where('users.email', $email)
+                                        ->first();
+                        $cpf_noEMP = @$result->cpf_no;
+                        $resultCnt = @$result->id;
+                        $emp_booking_exist = 0;
+                        if($resultCnt > 0){
+                            $emp_booking_exist = 1;
+                            if(strtoupper($cpf_noEMP) != strtoupper($cpfno)){
+                                //$emp_booking_exist = 2;
+                            }
                         }
+                        $row[26] = $emp_booking_exist;
+                        $row[27] = "end_of_line";
+                        $excelRows[] = $row;
+                        //$excelRows[] = trim($row,",");
                     }
-                    $row[26] = $emp_booking_exist;
-                    $row[27] = "end_of_line";
-                    $excelRows[] = $row;
-                    //$excelRows[] = trim($row,",");
                 }
             }
+            $data['invalidRows'] = $invalidRows;
             $data['excelRows'] = $excelRows; 
             $data['showlist'] = 1; 
 
@@ -182,7 +190,7 @@ class ImportController extends Controller
         $from_dt            = $row[9];
         $to_dt              = $row[10];
         $hotel_nm           = ucwords(trim($row[11]));
-        $category           = ucwords(trim($row[12]));
+        $category_room      = ucwords(trim($row[12]));
         $share_room_info    = trim($row[13]);
 
         $arrival_airport    = trim($row[14]);
@@ -251,13 +259,13 @@ class ImportController extends Controller
             $rowH_data['created_at'] = $today;
             $htl_id = DB::table('hotels')->insertGetId($rowH_data);
         }
-        $hotelCateFind = DB::table('hotels_category')->where('htl_idd', $htl_id)->where('hotel_category', $category)->first();
+        $hotelCateFind = DB::table('hotels_category')->where('htl_idd', $htl_id)->where('hotel_category', $category_room)->first();
         if ($hotelCateFind) {
             $htl_cat_id = $hotelCateFind->htl_cat_id;
         } else {
             $no_of_rooms = 1;
             $categoryData = [];
-            $categoryData['hotel_category']     = ucwords(@$category);
+            $categoryData['hotel_category']     = ucwords(@$category_room);
             $categoryData['hotel_nm']           = ucwords($hotel_nm);
             $categoryData['total_rooms']        = $no_of_rooms;
             $categoryData['create_by']          = $userId;
@@ -322,20 +330,28 @@ class ImportController extends Controller
         $row_data['drvr_number']            = $travelling_details;
         $row_data['drvr_veh_details']       = $transport_service;
         $row_data['share_room_with_empcd']  = $share_room_with;
+        $row_data['created_at']             = $today;
+        $row_data['updated_at']             = $today;
         $dataMsg = [];
-        $findAvt = DB::table('event_books_emp')->where('emp_event_cd', $event_id)->where('emp_cd', $emp_id)->first();
-
+        $findAvt = DB::table('event_books_emp')->where('emp_event_cd', $event_id)->where('emp_cd', $emp_id)
+                    ->where('status_in_htl', 1)->first(); // check active emp's event
         $intcd = @$findAvt->emp_ev_book_id;
+        if($intcd <= 0 || $intcd == null){ /// if not active event
+            $findAvt = DB::table('event_books_emp')->where('emp_event_cd', $event_id)->where('emp_cd', $emp_id)
+                    ->where('emp_hotel_cd', $htl_id)->where('status_in_htl', 0)->first();
+                    /// find deactive event with same(imported hotel) hotel
+        }
+
         $prv_emp_event_cd = @$findAvt->emp_event_cd;
         $prv_emp_hotel_cd = @$findAvt->emp_hotel_cd;
         $prv_emp_hotel_cat_cd = @$findAvt->emp_hotel_cat_cd;
         if(($event_id != $prv_emp_event_cd || $htl_cat_id != $prv_emp_hotel_cd) && $intcd > 0){
-            $queryTrfHtl = DB::table('event_books_emp')->where('emp_ev_book_id', $intcd)->where('emp_event_cd', $event_id)->where('emp_cd', $emp_id)->update(['status_in_htl' => 0]);
+            $queryTrfHtl = DB::table('event_books_emp')->where('emp_ev_book_id', $intcd)->where('emp_event_cd', $event_id)->where('emp_cd', $emp_id)->update(['status_in_htl' => 0, 'updated_at' => $today]);
             $findAvt = 0;
         }
         $new_insert = 0;
         if ($intcd > 0) {
-            $row_data['updated_at']     = $today;
+            //$row_data['updated_at']     = $today;
             $subQueryRun = DB::table('event_books_emp')->where('emp_ev_book_id', $intcd)->where('emp_event_cd', $event_id)->where('emp_cd', $emp_id)->update($row_data);
             
             if($subQueryRun){
@@ -347,7 +363,7 @@ class ImportController extends Controller
             }
         }else{
             $row_data['event_book_id']      = 0;
-            $row_data['created_at']         = $today;
+            //$row_data['created_at']         = $today;
             $row_data['emp_cd']             = $emp_id;
             $row_data['emp_event_cd']       = $event_id;
             $row_data['ev_emp_create_by']   = $userId;

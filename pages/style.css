@@ -1,3 +1,7 @@
+body {
+ font-family: 'Karla', sans-serif !important;
+}
+
 /*nav bottom*/
 nav.nav_bottom {
     position: fixed;
@@ -5,7 +9,7 @@ nav.nav_bottom {
     left: 0;
     width: 100%;
     height: 70px;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px rgb(0 0 0 / 24%);
     background-color: #ffffff;
     display: flex;
     overflow-x: auto;
@@ -21,8 +25,7 @@ nav.nav_bottom {
     min-width: 50px;
     overflow: hidden;
     white-space: nowrap;
-    font-family: sans-serif;
-    font-size: 16px;
+    font-size: 18px;
     color: #858585;
     text-decoration: none;
     -webkit-tap-highlight-color: transparent;
@@ -31,6 +34,15 @@ nav.nav_bottom {
 a.nav__link:hover {
     color: #F07E29;
     text-decoration: none;
+}
+ion-icon.md.hydrated {
+    font-size: 25px;
+}
+#flight-icon i {
+    rotate: -13deg;
+}
+i.material-icons.nav__icon {
+    font-size: 22px;
 }
 
 /* end*/
@@ -225,7 +237,8 @@ span.weather-degree {
     background-color: #F07E29;
     border-radius: 10px;
     color: #FFFFFF;
-    padding: 10px 50px;
+    padding: 10px 80px;
+    font-size: 16px;
 }
 
   .card {
@@ -264,7 +277,8 @@ span.weather-degree {
     font-size: 14px;
     line-height: 1.5;
     background-color: #EFF7FF;
-    padding: 10px 50px;
+    padding: 10px 80px;
+     font-size: 16px;
 }
 
  
@@ -279,7 +293,7 @@ span.weather-degree {
   }
 
 .user-details {
-    box-shadow: 0px 2px 21px -6px #366c753b;
+    box-shadow: 0px 2px 21px -6px #366c7552;
     display: flex;
     border-radius: 10px;
     justify-content: space-between;
@@ -393,7 +407,12 @@ span.weather-degree {
     top: 32%;
     left: 35%;
   }
-
+.fa-bolt:before, .fa-zap:before {
+    content: "\f0e7";
+    position: absolute;
+    top: 30%;
+    left: 37%;
+}
   .local-head h3 {
     color: #3F70A1;
     position: relative;
@@ -427,6 +446,9 @@ span.weather-degree {
     border: 1px solid #D9D9D9;
     width: 100%;
     border-radius: 10px;
+}
+section.wall {
+    padding-bottom: 70px;
 }
 .carousel-wrap {
   margin: 90px auto;
@@ -562,7 +584,7 @@ button.owl-next:before{
 .details h3 {
     color: #3F70A1;
 }
-.airport-details img {
+/*.airport-details img {
     border-radius: 50%;
     width: 300px;
     height: 300px;
@@ -592,7 +614,87 @@ h5.airport-text {
     content: '';
     left: 3%;
     opacity: 0.3;
+}*/
+
+
+
+/*menus*/
+.menu-icon i {
+    font-size: 35px;
 }
+.menu-icon i.far.fa-calendar-minus {
+    background-color: #f07e29;
+    border-radius: 50px;
+    width: 100px;
+    height: 100px;
+    color: #fff;
+    position: relative;
+    box-shadow: 0px 4px 15px 0px #f07e298c;
+}
+.fa-calendar-minus:before {
+    content: "\f272";
+    position: absolute;
+    top: 30px;
+    left: 35px;
+}
+.menu-icon i.fas.fa-user-edit {
+    background-color: #457CB2;
+    border-radius: 50px;
+    width: 100px;
+    height: 100px;
+    color: #fff;
+    position: relative;
+    box-shadow: 0px 4px 15px 0px #457cb27a;
+}
+.fa-user-edit:before, .fa-user-pen:before {
+    content: "\f4ff";
+    position: absolute;
+    top: 30px;
+    left: 35px;
+}
+.menu-icon i.far.fa-comment-dots {
+    background-color: #D1C900;
+    border-radius: 50px;
+    width: 100px;
+    height: 100px;
+    position: relative;
+    color: #fff;
+    box-shadow: 0px 4px 15px 0px #d1c90057;
+}
+.fa-comment-dots:before, .fa-commenting:before {
+    content: "\f4ad";
+    position: absolute;
+    top: 30px;
+    left: 35px;
+}
+section.menu {
+    padding: 70px 0px;
+}
+.menu-select {
+    justify-content: center;
+    display: flex;
+}
+.menu-content h4 {
+    color: #7A7A7A;
+    font-size: 25px;
+}
+.menu-content p {
+    font-size: 15px;
+}
+.stage a {
+    border: 1px solid #F07E29;
+    color: #F07E29;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+.stage a:hover {
+    background-color: #F07E29;
+    color: #fff;
+    text-decoration: none;
+}
+
+
 
 /*quix-css*/
 section.quiz {
@@ -1058,7 +1160,13 @@ section.participate-inner {
     background-image: none !important;
 
 }
-
+.hotel-bg {
+    background-color: #457CB2;
+    border-radius: 10px;
+    width: 60%;
+    margin: 0 auto;
+    padding: 10px 30px;
+}
 
 
 /*footer*/
